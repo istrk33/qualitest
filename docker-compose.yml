@@ -1,0 +1,89 @@
+version: "3"
+
+
+services:
+  clean-archi-postgres-db:
+    image: postgres:15.3
+    restart: always
+    environment:
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_DATABASE}
+      - POSTGRES_HOST=${DB_HOST}
+      - POSTGRES_PORT=${DB_PORT}
+    container_name: clean-archi-postgres-db
+    volumes:
+      - ./packages/backend/docker/pgdata:/var/lib/postgresql/data
+      - ./packages/backend/docker/init-test-db.sql:/docker-entrypoint-initdb.d/init-test-db.sql
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    networks:
+      - clean-archi-network
+
+  clean-archi-nestjs:
+    build:
+      context: ./packages/backend
+      dockerfile: "docker/Dockerfile"
+      args:
+        - NODE_ENV=development
+    ports:
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_DATABASE_TEST=${DB_DATABASE_TEST}
+      - POSTGRES_SYNC=false
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - APP_EXPIRES=${APP_EXPIRES}
+      - APP_PORT=${BACKEND_PORT}
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PORT}
+      - PGADMIN_LISTEN_PORT=${PGADMIN_PORT}
+    container_name: clean-archi-nestjs
+    depends_on:
+      - clean-archi-postgres-db
+    volumes:
+      - ./packages/backend:/app
+      - /app/node_modules
+    networks:
+      - clean-archi-network
+
+  # clean-archi-react:
+  #   build:
+  #     context: ./packages/frontend
+  #     dockerfile: "docker/Dockerfile"
+  #     args:
+  #       - NODE_ENV=development
+  #   restart: always
+  #   ports:
+  #     - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+  #   volumes:
+  #     - ./packages/frontend:/app
+  #     - /app/node_modules
+  #   networks:
+  #     - clean-archi-network
+
+  clean-archi-pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    container_name: clean-archi-pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+      - PGADMIN_LISTEN_PORT=${PGADMIN_PORT}
+      - PGADMIN_PORT=${PGADMIN_PORT}
+    ports:
+      - "${PGADMIN_PORT}:${PGADMIN_PORT}"
+    volumes:
+      - ./packages/backend/docker/pgadmin:/var/lib/pgadmin
+    depends_on:
+      - clean-archi-postgres-db
+    networks:
+      - clean-archi-network
+
+networks:
+  clean-archi-network:
+    driver: bridge
