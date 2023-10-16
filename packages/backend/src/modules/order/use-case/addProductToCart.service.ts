@@ -1,7 +1,7 @@
 import { Exception } from '../shared/domain/service/util/exception/exceptions.service';
 
 import { ExceptionTypeEnum } from '../shared/domain/const/exception-type.enum';
-import EmailSenderService from '../../email/utils/EmailSender.service';
+import EmailSenderService from '../../email/utils/emailSender.service';
 class AddProductToCartService {
     private maxProductsOrder = 10;
 
