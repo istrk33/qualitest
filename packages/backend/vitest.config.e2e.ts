@@ -6,10 +6,10 @@ export default defineConfig({
     include: ['**/*.e2e-spec.ts'],
     globals: true,
     alias: {
-      '@src': './src',
-      '@test': './test',
+      '@src': '../src',
+      '@test': './',
     },
-    root: './',
+    root: './test',
 
     threads: false,
     maxThreads: 1,
@@ -23,4 +23,5 @@ export default defineConfig({
     },
   },
   plugins: [swc.vite()],
+
 });

@@ -33,6 +33,14 @@ export default class MentoringSlotRepository extends Repository<MentoringSlotOrm
     return this.mapMentoringSlotsOrmToMentoringSlots(mentoringSlotsOrm);
   }
 
+  async findMentoringSlotsByMissed():Promise<MentoringSlot[]>{
+    const query=this.createQueryBuilder('mentoringSlot');
+    query.where('mentoringSlot.was_missed_by_mentor= :isMissed',{isMissed:true});
+    const mentoringSlotsOrm=await query.getMany();
+
+    return this.mapMentoringSlotsOrmToMentoringSlots(mentoringSlotsOrm)
+  }
+
   async findMentoringSlotsBetweenDates(startDate: Date, endDate: Date): Promise<MentoringSlot[]> {
     const query = this.createQueryBuilder('mentoringSlot');
 

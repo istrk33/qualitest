@@ -8,4 +8,5 @@ export interface MentoringSlotRepositoryInterface extends RepositoryInterface {
   findMentoringSlotBySlug(slug: string): Promise<MentoringSlot>;
   findMentoringSlotById(id: string): Promise<MentoringSlot>;
   findMentoringSlotsBetweenDates(startDate: Date, endDate: Date): Promise<MentoringSlot[]>;
+  findMentoringSlotsByMissed(): Promise<MentoringSlot[]>;
 }

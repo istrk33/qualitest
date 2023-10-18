@@ -14,12 +14,20 @@ import MentoringSlotCreationDuplicateVerifierService from '@src/modules/mentorin
 import MentoringSlotOrm from '@src/modules/mentoring-slot/infrastructure/db/entity/mentoring-slot.orm-entity';
 import MentoringSlotRepository from '@src/modules/mentoring-slot/infrastructure/db/repository/mentoring-slot.repository';
 import MentoringSlotController from '@src/modules/mentoring-slot/presentation/controller/mentoring-slot.controller';
+import { GetMentoringSlotsByMissedService } from './domain/service/use-case/get-mentoring-slots-by-missed.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([MentoringSlotOrm])],
   controllers: [MentoringSlotController],
   providers: [
-    {
+        {
+      provide: GetMentoringSlotsByMissedService,
+      useFactory: (mentoringSlotRepository: MentoringSlotRepositoryInterface)  => {
+        return new GetMentoringSlotsByMissedService(mentoringSlotRepository);
+      },
+      inject:["MentoringSlotRepositoryInterface"]
+    },
+{
       provide: 'MentoringSlotRepositoryInterface',
       useClass: MentoringSlotRepository,
     },
@@ -40,7 +48,7 @@ import MentoringSlotController from '@src/modules/mentoring-slot/presentation/co
       },
       inject: ['MentoringSlotRepositoryInterface', MentoringSlotCreationDuplicateVerifierService],
     },
-    {
+{
       provide: DeleteMentoringSlotService,
       useFactory: (mentoringSlotRepository: MentoringSlotRepositoryInterface) => {
         return new DeleteMentoringSlotService(mentoringSlotRepository);
@@ -85,7 +93,7 @@ import MentoringSlotController from '@src/modules/mentoring-slot/presentation/co
       },
       inject: ['MentoringSlotRepositoryInterface'],
     },
-    {
+{
       provide: DelayMentoringSlotService,
       useFactory: (mentoringSlotRepository: MentoringSlotRepositoryInterface) => {
         return new DelayMentoringSlotService(mentoringSlotRepository);
@@ -101,4 +109,4 @@ import MentoringSlotController from '@src/modules/mentoring-slot/presentation/co
     },
   ],
 })
-export default class MentoringSlotModule {}
+export default class MentoringSlotModule { }
