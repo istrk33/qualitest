@@ -6,17 +6,15 @@ export default defineConfig({
     include: ['**/*.e2e-spec.ts'],
     globals: true,
     alias: {
-      '@src': './src',
-      '@test': './test',
+      '@src': '../src',
+      '@test': './',
     },
-    root: './',
+    root: './test',
 
     threads: false,
     maxThreads: 1,
     maxConcurrency: 1,
     bail: 1,
-    hookTimeout: 60000,
-    testTimeout: 60000,
   },
   resolve: {
     alias: {
@@ -24,6 +22,6 @@ export default defineConfig({
       '@test': './test',
     },
   },
-
   plugins: [swc.vite()],
+
 });
