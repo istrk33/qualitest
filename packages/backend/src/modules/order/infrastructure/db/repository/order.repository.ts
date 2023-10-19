@@ -1,6 +1,6 @@
 import { DataSource, Repository } from 'typeorm';
 import { InjectDataSource } from '@nestjs/typeorm';
-import Order from '@src/modules/order/domain/model/entity/order.entity';
+import Order from '@src/modules/order/infrastructure/db/entity/order.orm-entity';
 import { OrderRepositoryInterface } from '@src/modules/order/domain/port/db/order.repository.interface';
 import OrderOrm from '@src/modules/order/infrastructure/db/entity/order.orm-entity';
 import { OrmEntityToDomainEntityMapper } from '@src/modules/shared/infrastructure/db/ormEntityToDomainEntityMapper.service';

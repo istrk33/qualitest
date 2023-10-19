@@ -1,6 +1,6 @@
 // import { Controller } from '@nestjs/common';
 import { Body, Controller, Delete, Get, Inject, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
-import Order from '../../infrastructure/db/entity/order.orm-entity';
+import Order from '../../domain/model/entity/order.entity';
 import { GetAllOrdersService } from '../../domain/service/use-case/get-all-orders.service';
 import { GetOrdersBeforeDateService } from '../../domain/service/use-case/get-all-order-before-date.service';
 import { OrderPresenter } from '@src/modules/order/presentation/presenter/order.presenter';

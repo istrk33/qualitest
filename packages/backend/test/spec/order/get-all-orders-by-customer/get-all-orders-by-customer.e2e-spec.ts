@@ -31,6 +31,7 @@ describe('GET ALL ORDERS BEFORE DATE', () => {
     const getAllOrdersByCustomerResponse = await request(app.getHttpServer()).get(`/api/orders/get-all-orders-by-customer/CentQuinzeLeRaciste`);
     
     // vérifier que la réponse a bien un status 200
+
     expect(getAllOrdersByCustomerResponse.status).toBe(200);
     
     // vérifier que la réponse a bien un body avec un tableau vide

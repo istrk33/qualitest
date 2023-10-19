@@ -25,7 +25,6 @@ describe('GET ALL ORDERS', () => {
     // récupèrer la réponse HTTP
 
     const getAllOrdersResponse = await request(app.getHttpServer()).get('/api/orders/get-all-orders');
-
     // vérifier que la réponse a bien un status 200
     expect(getAllOrdersResponse.status).toBe(200);
 
