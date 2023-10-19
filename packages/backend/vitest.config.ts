@@ -5,22 +5,22 @@ export default defineConfig({
   test: {
     globals: true,
     alias: {
-      '@src': './src',
-      '@test': './test',
+      '@src': '../src',
+      '@test': '../src',
     },
-    root: './',
+    root: './src',
   },
   resolve: {
     alias: {
-      '@src': './src',
-      '@test': './test',
+      '@src': '../src',
+      '@test': '../src',
     },
   },
 
   plugins: [
     // This is required to build the test files with SWC
     swc.vite({
-      // Explicitly set the module type to avoid inheriting this value from a `.swcrc` config file
+      // Explicitly set the module type to avoid inheriting this value from a .swcrc config file
       module: { type: 'es6' },
     }),
   ],

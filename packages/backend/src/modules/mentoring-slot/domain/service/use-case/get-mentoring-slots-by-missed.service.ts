@@ -4,7 +4,11 @@ import { MentoringSlotRepositoryInterface } from '@src/modules/mentoring-slot/do
 export class GetMentoringSlotsByMissedService {
   constructor(private readonly mentoringSlotRepository: MentoringSlotRepositoryInterface) {}
 
-  async getMentoringSlotsByMissed(): Promise<MentoringSlot[]> {
+  async getMentoringSlotsByMissed(isUserAuthenticated: boolean): Promise<MentoringSlot[]> {
+
+    if(!isUserAuthenticated){
+      throw new Error('User is not authenticated !');
+    }
     const mentoringSlots = await this.mentoringSlotRepository.findMentoringSlotsByMissed();
     return mentoringSlots;
   }
