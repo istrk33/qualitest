@@ -32,7 +32,7 @@ export const whenUpdatingAInexistantMentoringSlot = async (
 ): Promise<{
   getInexistantMentoringSlotResponse: request.Response;
 }> => {
-  const updateMentoringSlotRequestData: UpdateMentoringSlotDtoInterface = {
+  const updateMentoringSlotRequestData = {
     startDate: '2023-10-22T10:00:00.000Z',
     endDate: '2023-10-22T12:00:00.000Z',
   };

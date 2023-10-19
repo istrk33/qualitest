@@ -1,0 +1,23 @@
+Fonctionnalités : 
+
+- Récupérer toutes les commandes
+- Récupérer les commandes passées avant une certaine date
+- Récupérer les commandes passées après une certaine date
+- Récupérer les commandes pour un customer : doit renvoyer une exception si le nom du customer demandé fait moins de 5 caractères ou contient des chiffres.
+
+- Passer une commande à payer
+- Annuler une commande 
+- Supprimer une commande par son id
+- Créer une commande (avec un status par défaut à ‘InCart’)
+
+
+
+Test fonctionnel pour chacune des fonctionnalités
+- Test unitaire (mini) au moins pour « Récupérer les commandes pour un customer »
+- Clean Code
+- SOLID 
+- Clean architecture (sauf pour la gestion des entités) 
+
+- Certains fichiers sont pas dans le bon dossier (dans la bonne couche de la clean archi) => les déplacer dans le bon dossier
+
+- Tips : - créer un controller avec un point d’api, un use case associé, repo (méthode de repo), test fonctionnel. Puis si test unitaire demandé, faites le test unitaire.

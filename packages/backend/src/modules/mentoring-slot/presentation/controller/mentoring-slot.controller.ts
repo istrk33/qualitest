@@ -13,8 +13,8 @@ import { ConfirmMentoringSlotService } from '@src/modules/mentoring-slot/domain/
 import { DelayMentoringSlotService } from '@src/modules/mentoring-slot/domain/service/use-case/delay-mentoring-slot.service';
 import { DowngradeMentoringSlotService } from '@src/modules/mentoring-slot/domain/service/use-case/downgrade-mentoring-slot.service';
 import { DowngradeMentoringSlotDto } from '@src/modules/mentoring-slot/presentation/dto/downgrade-mentoring-slot.dto';
-import { GetMentoringSlotsByMissedService } from '../../domain/service/use-case/get-mentoring-slots-by-missed.service';
-import MentoringSlot from '../../domain/model/entity/mentoring-slot.entity';
+import MentoringSlot from '@src/modules/mentoring-slot/domain/model/entity/mentoring-slot.entity';
+import { GetMentoringSlotsByMissedService } from '@src/modules/mentoring-slot/domain/service/use-case/get-mentoring-slots-by-missed.service';
 
 @Controller('/mentoring-slots')
 export default class MentoringSlotController {
@@ -28,13 +28,14 @@ export default class MentoringSlotController {
     private readonly confirmMentoringSlotService: ConfirmMentoringSlotService,
     private readonly delayMentoringSlotService: DelayMentoringSlotService,
     private readonly downgradeMentoringSlotService: DowngradeMentoringSlotService,
-    private readonly getMentoringSlotByMissedService: GetMentoringSlotsByMissedService,
+    private readonly getMentoringSlotsByMissedService: GetMentoringSlotsByMissedService,
   ) {}
 
   @Get('/was-missed')
   async getMissedMentoringSlots(): Promise<MentoringSlot[]> {
-    return await this.getMentoringSlotByMissedService.getMentoringSlotsByMissed();
+    return await this.getMentoringSlotsByMissedService.getMentoringSlotsByMissed();
   }
+
   @Get()
   async searchMentoringSlots(@Query() searchMentoringSlotsDto: SearchMentoringSlotsDto): Promise<MentoringSlotPresenter[]> {
     const mentoringSlots = await this.searchMentoringSlotsService.searchMentoringSlots(searchMentoringSlotsDto);
