@@ -2,7 +2,7 @@ import { OrderStatusEnum } from '@src/modules/order/domain/model/const/order-sta
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity('order')
-export default class Order {
+export default class OrderOrm {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

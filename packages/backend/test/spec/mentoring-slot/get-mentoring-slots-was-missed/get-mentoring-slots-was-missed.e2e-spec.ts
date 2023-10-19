@@ -4,7 +4,6 @@ import { givenExistingDbConnection } from '@test/utils/fixture/shared/db-connect
 import DataSource from '@src/modules/database/config/typeorm.config';
 import request from 'supertest';
 import { mentoringSlotBuilder } from '@test/spec/mentoring-slot/mentoring-slot.e2e-builder';
-import MentoringSlot from '@src/modules/mentoring-slot/domain/model/entity/mentoring-slot.entity';
 import { givenExistingMentoringSlot } from '@test/spec/mentoring-slot/mentoring-slot.e2e-fixture';
 import { cleanApp } from '@test/utils/fixture/shared/app/clean-app';
 
@@ -53,7 +52,7 @@ describe('Get Missed Mentoring Slots ', () => {
 
     // envoie une requête GET à l'app de test et récupère la réponse
     const getMissedMentoringSlotsResponse = await request(app.getHttpServer()).get('/api/mentoring-slots/was-missed');
-
+  
     // vérifier que la réponse a bien un status 200
     expect(getMissedMentoringSlotsResponse.status).toBe(200);
 

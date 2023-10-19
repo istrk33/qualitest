@@ -31,8 +31,4 @@ describe('Get Missed Mentoring Slots ', () => {
     // même chose que :
     expect(getMissedMentoringSlotsResponse.body.length).toBe(0);
   });
-
-  it('should return a mentoring slot if there is a missed mentoring slot in DB', async () => {
-    
-  });
 });

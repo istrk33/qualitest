@@ -7,7 +7,7 @@ import { orderBuilder } from '@test/spec/order/order.e2e-builder';
 import { givenExistingOrder } from '@test/spec/order/order.e2e-fixture';
 import { cleanApp } from '@test/utils/fixture/shared/app/clean-app';
 
-describe('GET ALL ORDERS', () => {
+describe('GET ALL ORDERS BEFORE DATE', () => {
   let app: NestExpressApplication;
   let connection: typeof DataSource;
 
@@ -20,43 +20,45 @@ describe('GET ALL ORDERS', () => {
     connection = await givenExistingDbConnection();
   });
 
-  it('should not return any order if there is no order in DB', async () => {
-    // envoyer une requête HTTP GET sur l'url /api/mentoring-slots/was-missed
-    // récupèrer la réponse HTTP
-
-    const getAllOrdersResponse = await request(app.getHttpServer()).get('/api/orders/get-all-orders');
-
-    // vérifier que la réponse a bien un status 200
-    expect(getAllOrdersResponse.status).toBe(200);
-
-    // vérifier que la réponse a bien un body avec un tableau vide
-    expect(getAllOrdersResponse.body).toEqual([]);
-    // même chose que :
-    expect(getAllOrdersResponse.body.length).toBe(0);
-  });
-
-  it('should return an order if there is an order in DB', async () => {
-    // ARRANGE :
+  it('should return orders if there is orders before the demanded date in DB', async () => {
+    
     // créer une permanence en base de données avec was missed à true
     const order = orderBuilder().build();
     const orderInDb = await givenExistingOrder(connection, order);
+    // envoyer une requête HTTP GET sur l'url /api/mentoring-slots/was-missed
+    // récupèrer la réponse HTTP
 
-    // envoie une requête GET à l'app de test et récupère la réponse
-    const getAllOrdersResponse = await request(app.getHttpServer()).get('/api/orders/get-all-orders');
-   
+    const getAllOrdersBeforDateResponse = await request(app.getHttpServer()).get(`/api/orders/get-all-orders-before-date/2030-10-22T10:00:00.000Z`);
+    
+    
     // vérifier que la réponse a bien un status 200
-    expect(getAllOrdersResponse.status).toBe(200);
-
-    // vérifier que la réponse a bien un body avec la permanence créée
-    expect(getAllOrdersResponse.body.length).toEqual(1);
-
-    // vérifie que la permanence récupérée est bien celle créée en BDD
-    expect(getAllOrdersResponse.body[0].id).toEqual(orderInDb.id);
-    expect(getAllOrdersResponse.body[0].customer).toEqual(orderInDb.customer);
-    expect(getAllOrdersResponse.body[0].startDate).toEqual(orderInDb.startDate);
-    expect(getAllOrdersResponse.body[0].endDate).toEqual(orderInDb.endDate);
+    expect(getAllOrdersBeforDateResponse.status).toBe(200);
+    
+    // vérifier que la réponse a bien un body avec un tableau vide
+    // même chose que :
+    expect(getAllOrdersBeforDateResponse.body.length).toBe(1);
   });
 
+  it('should not return any order if there is no order before the demanded date in DB', async () => {
+    
+    // créer une permanence en base de données avec was missed à true
+    const order = orderBuilder().build();
+    const orderInDb = await givenExistingOrder(connection, order);
+    // envoyer une requête HTTP GET sur l'url /api/mentoring-slots/was-missed
+    // récupèrer la réponse HTTP
+
+    const getAllOrdersBeforDateResponse = await request(app.getHttpServer()).get(`/api/orders/get-all-orders-before-date/2022-10-22T10:00:00.000Z`);
+
+
+    // vérifier que la réponse a bien un status 200
+    expect(getAllOrdersBeforDateResponse.status).toBe(200);
+
+    // vérifier que la réponse a bien un body avec un tableau vide
+    expect(getAllOrdersBeforDateResponse.body).toEqual([]);
+    // même chose que :
+    expect(getAllOrdersBeforDateResponse.body.length).toBe(0);
+  });
+  
   // s'execute après tous les tests de ce fichier
   // permet de supprimer les données de la DB et de fermer la connection
   afterAll(async () => {

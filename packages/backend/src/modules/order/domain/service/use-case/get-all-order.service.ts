@@ -4,7 +4,7 @@ import { OrderRepositoryInterface } from '@src/modules/order/domain/port/db/orde
 import OrderRepository from '@src/modules/order/infrastructure/db/repository/order.repository';
 
 export class GetAllOrderService {
-    constructor(private readonly orderRepository: OrderRepositoryInterface) {}
+  constructor(private readonly orderRepository: OrderRepositoryInterface) { }
   async getAllOrders(): Promise<Order[]> {
     // // if (!isUserAuthenticated) {
     // //   throw new Error('User is not authenticated');

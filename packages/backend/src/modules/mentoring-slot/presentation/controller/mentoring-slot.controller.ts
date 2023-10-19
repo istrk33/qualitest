@@ -33,7 +33,7 @@ export default class MentoringSlotController {
 
   @Get('/was-missed')
   async getMissedMentoringSlots(): Promise<MentoringSlot[]> {
-    return await this.getMentoringSlotsByMissedService.getMentoringSlotsByMissed();
+    return await this.getMentoringSlotsByMissedService.getMentoringSlotsByMissed(true);
   }
 
   @Get()
