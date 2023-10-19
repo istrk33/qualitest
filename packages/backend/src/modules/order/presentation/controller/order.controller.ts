@@ -1,7 +1,7 @@
 // import { Controller } from '@nestjs/common';
 import { Body, Controller, Delete, Get, Inject, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import Order from '../../infrastructure/db/entity/order.orm-entity';
-import { GetAllOrderService } from '../../domain/service/use-case/get-all-order.service';
+import { GetAllOrdersService } from '../../domain/service/use-case/get-all-orders.service';
 import { GetOrdersBeforeDateService } from '../../domain/service/use-case/get-all-order-before-date.service';
 import { OrderPresenter } from '@src/modules/order/presentation/presenter/order.presenter';
 import { GetOrdersAfterDateService } from '../../domain/service/use-case/get-all-order-after-date.service';
@@ -12,7 +12,7 @@ const MIN_CHAR_LENGTH = 5;
 export default class OrderController {
 
   constructor(
-    private readonly getAllOrdersService: GetAllOrderService,
+    private readonly getAllOrdersService: GetAllOrdersService,
     private readonly getOrdersBeforeDateService: GetOrdersBeforeDateService,
     private readonly getOrdersAfterDateService: GetOrdersAfterDateService,
     private readonly getOrdersByCustomerService: GetOrdersByCustomerService,

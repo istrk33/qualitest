@@ -8,13 +8,13 @@ export class SetOrderStatusPaidService {
     private readonly orderRepository: OrderRepositoryInterface,
   ) { }
 
-  async setOrderStatusToCancelled(id: string): Promise<Order> {
+  async setOrderStatusToPaid(id: string): Promise<Order> {
     const order = await this.orderRepository.findOrderById(id);
 
     if (!order) {
       throw new Exception(ExceptionTypeEnum.NotFound, `Order with id ${id} not found`);
     }
-    order.setCancelled();
+    order.setPaid();
 
     return await this.saveOrder(order);
   }

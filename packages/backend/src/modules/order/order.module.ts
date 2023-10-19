@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import Order from '@src/modules/order/infrastructure/db/entity/order.orm-entity';
 import OrderRepository from '@src/modules/order/infrastructure/db/repository/order.repository';
 import OrderController from '@src/modules/order/presentation/controller/order.controller';
-import { GetAllOrderService } from './domain/service/use-case/get-all-order.service';
+import { GetAllOrdersService } from './domain/service/use-case/get-all-orders.service';
 import { OrderRepositoryInterface } from './domain/port/db/order.repository.interface';
 import { GetOrdersBeforeDateService } from './domain/service/use-case/get-all-order-before-date.service';
 import { GetOrdersAfterDateService } from './domain/service/use-case/get-all-order-after-date.service';
@@ -19,9 +19,9 @@ import { GetOrdersByCustomerService } from './domain/service/use-case/get-order-
       useClass: OrderRepository,
     },
     {
-      provide: GetAllOrderService,
+      provide: GetAllOrdersService,
       useFactory: (orderRepository: OrderRepositoryInterface) => {
-        return new GetAllOrderService(orderRepository);
+        return new GetAllOrdersService(orderRepository);
       },
       inject: ['OrderRepository'],
     },
