@@ -2,14 +2,14 @@ import MentoringSlot from '@src/modules/mentoring-slot/domain/model/entity/mento
 import { MentoringSlotRepositoryInterface } from '@src/modules/mentoring-slot/domain/port/db/mentoring-slot.repository.interface';
 
 export class GetMentoringSlotsByMissedService {
+  constructor(private readonly mentoringSlotRepository: MentoringSlotRepositoryInterface) {}
+
   async getMentoringSlotsByMissed(isUserAuthenticated: boolean): Promise<MentoringSlot[]> {
-    if (!isUserAuthenticated) {
-      throw new Error('User is not authenticated');
+
+    if(!isUserAuthenticated){
+      throw new Error('User is not authenticated !');
     }
-
-    const mentoringSlotRepository = new MentoringSlotRepository();
-
-    const mentoringSlots = await mentoringSlotRepository.findMentoringSlotsByMissed();
+    const mentoringSlots = await this.mentoringSlotRepository.findMentoringSlotsByMissed();
     return mentoringSlots;
   }
 }

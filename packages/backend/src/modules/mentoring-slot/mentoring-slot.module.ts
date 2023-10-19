@@ -24,7 +24,6 @@ import MentoringSlotController from '@src/modules/mentoring-slot/presentation/co
       provide: 'MentoringSlotRepositoryInterface',
       useClass: MentoringSlotRepository,
     },
-
     {
       provide: DelayMentoringSlotService,
       useFactory: (mentoringSlotRepository: MentoringSlotRepositoryInterface) => {

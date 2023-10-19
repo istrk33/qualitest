@@ -78,7 +78,7 @@ services:
     ports:
       - "${PGADMIN_PORT}:${PGADMIN_PORT}"
     volumes:
-      - ./packages/backend/docker/pgadmin:/var/lib/pgadmin
+      - /packages/backend/docker/pgadmin
     depends_on:
       - clean-archi-postgres-db
     networks:

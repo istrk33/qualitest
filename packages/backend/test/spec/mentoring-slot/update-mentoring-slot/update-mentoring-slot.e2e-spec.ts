@@ -49,7 +49,7 @@ describe('Update MentoringSlot Category (e2e)', () => {
     thenTheResponseShouldBeNotFound(getInexistantMentoringSlotResponse);
   });
 
-  it('should return an exception if there is already a mentoring slot ending between the start date and the end date of the new mentoring slot', async () => {
+  it('should return an exception there is already a mentoring slot ending between the start date and the end date of the new mentoring slot', async () => {
     const mentoringSlotWithDuplicateMentorSlotBuild = mentoringSlotBuilder()
       .withStartDate('2023-11-22T10:00:00.000Z')
       .withEndDate('2023-11-22T12:00:00.000Z')
