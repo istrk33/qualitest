@@ -1,6 +1,8 @@
 import { OrderStatusEnum } from '@src/modules/order/domain/model/const/order-status.enum';
 
 export default class Order {
+    static MIN_CHAR_LENGTH = 5;
+    
     id: string;
 
     createdAt: Date;

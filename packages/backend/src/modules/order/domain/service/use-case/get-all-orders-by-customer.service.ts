@@ -1,11 +1,11 @@
-import Order from '@src/modules/order/infrastructure/db/entity/order.orm-entity';
+import OrderOrm from '@src/modules/order/infrastructure/db/entity/order.orm-entity';
+import Order from '@src/modules/order/domain/model/entity/order.entity';
 import { OrderRepositoryInterface } from '@src/modules/order/domain/port/db/order.repository.interface';
 
-const MIN_CHAR_LENGTH = 5;
 export class GetAllOrdersByCustomerService {
   constructor(private readonly orderRepository: OrderRepositoryInterface) { }
-  async getAllOrdersByCustomer(customer: string): Promise<Order[]> {
-    if (customer.length < MIN_CHAR_LENGTH) {
+  async getAllOrdersByCustomer(customer: string): Promise<OrderOrm[]> {
+    if (customer.length < Order.MIN_CHAR_LENGTH) {
       throw new Error('Error on username length, it must be 5 char minimum !');
     }
     if (/\d/.test(customer)) {

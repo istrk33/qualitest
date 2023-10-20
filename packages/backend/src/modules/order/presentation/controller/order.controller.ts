@@ -10,6 +10,7 @@ import { SetOrderStatusPaidService } from '@src/modules/order/domain/service/use
 import { DeleteOrderService } from '@src/modules/order/domain/service/use-case/delete-order.service';
 import { CreateOrderDto } from '@src/modules/order/domain/model/dto/create-order.dto';
 import { CreateOrderService } from '@src/modules/order/domain/service/use-case/create-order.service';
+import Order from '../../domain/model/entity/order.entity';
 
 @Controller('/orders')
 export default class OrderController {
@@ -31,18 +32,27 @@ export default class OrderController {
   }
 
   @Get('/get-all-orders-before-date/:date')
-  async getAllOrdersBeforeDate(@Param('date') date: string): Promise<OrderOrm[]> {
-    return await this.getOrdersBeforeDateService.getAllOrdersBeforeDate(new Date(date));
+  async getAllOrdersBeforeDate(@Param('date') date: string): Promise<OrderPresenter[]> {
+    const orders = await this.getOrdersBeforeDateService.getAllOrdersBeforeDate(new Date(date));
+    return orders.map((order) => {
+      return new OrderPresenter(order as Order);
+    });
   }
 
   @Get('/get-all-orders-after-date/:date')
-  async getAllOrdersAfterDate(@Param('date') date: string): Promise<OrderOrm[]> {
-    return await this.getOrdersAfterDateService.getAllOrdersAfterDate(new Date(date));
+  async getAllOrdersAfterDate(@Param('date') date: string): Promise<OrderPresenter[]> {
+    const orders = await this.getOrdersAfterDateService.getAllOrdersAfterDate(new Date(date));
+    return orders.map((order) => {
+      return new OrderPresenter(order as Order);
+    });
   }
 
   @Get('/get-all-orders-by-customer/:customer')
-  async getAllOrdersByCustomer(@Param('customer') customer: string): Promise<OrderOrm[]> {
-    return await this.getOrdersByCustomerService.getAllOrdersByCustomer(customer);
+  async getAllOrdersByCustomer(@Param('customer') customer: string): Promise<OrderPresenter[]> {
+    const orders = await this.getOrdersByCustomerService.getAllOrdersByCustomer(customer);
+    return orders.map((order) => {
+      return new OrderPresenter(order as Order);
+    });
   }
 
   @Patch('/:id/pay-order')
