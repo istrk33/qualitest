@@ -10,8 +10,7 @@ export class GetAllOrdersByCustomerService {
     }
     if (/\d/.test(customer)) {
       throw new Error('Error on username composition, it can\'t have digit !');
-    }
-    
+    }    
     const orders = await this.orderRepository.getAllOrdersByCustomer(customer);
     return orders;
   }
