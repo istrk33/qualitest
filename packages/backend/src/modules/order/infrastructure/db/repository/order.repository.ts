@@ -18,11 +18,7 @@ export default class OrderRepository extends Repository<OrderOrm> implements Ord
 
   async getAllOrders(): Promise<Order[]> {
     const query = this.createQueryBuilder('order');
-
-    // query.where('or.wasMissedByMentor = :wasMissedByMentor', { wasMissedByMentor: true });
-
     const orderOrm = await query.getMany();
-
     return this.mapOrderOrmToOrders(orderOrm);
   }
 

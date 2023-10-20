@@ -1,5 +1,5 @@
 import { GetAllOrdersByCustomerService } from '@src/modules/order/domain/service/use-case/get-all-orders-by-customer.service';
-import { OrderRepositoryInterface } from '../../port/db/order.repository.interface';
+import { OrderRepositoryInterface } from '@src/modules/order/domain/port/db/order.repository.interface';
 
 describe('get orders by customer only if customer hasn\'t digit and more than 5 chars', () => {
   it('should return orders by customer', async () => {

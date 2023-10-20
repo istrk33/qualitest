@@ -11,12 +11,12 @@ export class CreateOrderService {
   ) { }
 
   async createOrder(createOrderDto: CreateOrderDto): Promise<Order> {
-    const createCreator = {
+    const createOrder = {
       ...createOrderDto,
       status: OrderStatusEnum.InCart,
     };
 
-    return await this.saveOrder(createCreator);
+    return await this.saveOrder(createOrder);
   }
 
   private async saveOrder(createOrder: DeepPartial<Order>): Promise<Order> {

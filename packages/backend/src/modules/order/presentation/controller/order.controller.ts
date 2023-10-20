@@ -1,17 +1,15 @@
-// import { Controller } from '@nestjs/common';
 import { Body, Controller, Delete, Get, Inject, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
-import OrderOrm from '../../infrastructure/db/entity/order.orm-entity';
-import { GetAllOrdersService } from '../../domain/service/use-case/get-all-orders.service';
-import { GetAllOrdersBeforeDateService } from '../../domain/service/use-case/get-all-orders-before-date.service';
+import OrderOrm from '@src/modules/order/infrastructure/db/entity/order.orm-entity';
+import { GetAllOrdersService } from '@src/modules/order/domain/service/use-case/get-all-orders.service';
+import { GetAllOrdersBeforeDateService } from '@src/modules/order/domain/service/use-case/get-all-orders-before-date.service';
 import { OrderPresenter } from '@src/modules/order/presentation/presenter/order.presenter';
-import { GetAllOrdersAfterDateService } from '../../domain/service/use-case/get-all-orders-after-date.service';
-import { GetAllOrdersByCustomerService } from '../../domain/service/use-case/get-all-orders-by-customer.service';
-import { SetOrderStatusCancelService } from '../../domain/service/use-case/cancel-order.service';
-import { SetOrderStatusPaidService } from '../../domain/service/use-case/set-order-status-paid.service';
-import { DeleteOrderService } from '../../domain/service/use-case/delete-order.service';
-import { CreateOrderDto } from '../../domain/model/dto/create-order.dto';
-import { CreateOrderService } from '../../domain/service/use-case/create-order.service';
-
+import { GetAllOrdersAfterDateService } from '@src/modules/order/domain/service/use-case/get-all-orders-after-date.service';
+import { GetAllOrdersByCustomerService } from '@src/modules/order/domain/service/use-case/get-all-orders-by-customer.service';
+import { SetOrderStatusCancelService } from '@src/modules/order/domain/service/use-case/cancel-order.service';
+import { SetOrderStatusPaidService } from '@src/modules/order/domain/service/use-case/set-order-status-paid.service';
+import { DeleteOrderService } from '@src/modules/order/domain/service/use-case/delete-order.service';
+import { CreateOrderDto } from '@src/modules/order/domain/model/dto/create-order.dto';
+import { CreateOrderService } from '@src/modules/order/domain/service/use-case/create-order.service';
 
 @Controller('/orders')
 export default class OrderController {

@@ -3,15 +3,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import Order from '@src/modules/order/infrastructure/db/entity/order.orm-entity';
 import OrderRepository from '@src/modules/order/infrastructure/db/repository/order.repository';
 import OrderController from '@src/modules/order/presentation/controller/order.controller';
-import { GetAllOrdersService } from './domain/service/use-case/get-all-orders.service';
-import { OrderRepositoryInterface } from './domain/port/db/order.repository.interface';
-import { GetAllOrdersBeforeDateService } from './domain/service/use-case/get-all-orders-before-date.service';
-import { GetAllOrdersAfterDateService } from './domain/service/use-case/get-all-orders-after-date.service';
-import { GetAllOrdersByCustomerService } from './domain/service/use-case/get-all-orders-by-customer.service';
-import { SetOrderStatusPaidService } from './domain/service/use-case/set-order-status-paid.service';
-import { SetOrderStatusCancelService } from './domain/service/use-case/cancel-order.service';
-import { DeleteOrderService as DeleteOrderByIdService } from './domain/service/use-case/delete-order.service';
-import { CreateOrderService } from './domain/service/use-case/create-order.service';
+import { GetAllOrdersService } from '@src/modules/order/domain/service/use-case/get-all-orders.service';
+import { OrderRepositoryInterface } from '@src/modules/order/domain/port/db/order.repository.interface';
+import { GetAllOrdersBeforeDateService } from '@src/modules/order/domain/service/use-case/get-all-orders-before-date.service';
+import { GetAllOrdersAfterDateService } from '@src/modules/order/domain/service/use-case/get-all-orders-after-date.service';
+import { GetAllOrdersByCustomerService } from '@src/modules/order/domain/service/use-case/get-all-orders-by-customer.service';
+import { SetOrderStatusPaidService } from '@src/modules/order/domain/service/use-case/set-order-status-paid.service';
+import { SetOrderStatusCancelService } from '@src/modules/order/domain/service/use-case/cancel-order.service';
+import { DeleteOrderService as DeleteOrderByIdService } from '@src/modules/order/domain/service/use-case/delete-order.service';
+import { CreateOrderService } from '@src/modules/order/domain/service/use-case/create-order.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Order])],
