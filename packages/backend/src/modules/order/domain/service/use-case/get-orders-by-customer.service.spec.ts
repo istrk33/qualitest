@@ -6,7 +6,7 @@ describe('get orders by customer only if customer hasn\'t digit and more than 5 
     const OrderCustomerMock = [{}];
 
     const orderRepositoryMock = {
-      getOrdersByCustomer: () => OrderCustomerMock,
+      getAllOrdersByCustomer: () => OrderCustomerMock,
     } as unknown as OrderRepositoryInterface;
 
     const getOrderService = new GetAllOrdersByCustomerService(orderRepositoryMock);
@@ -20,7 +20,7 @@ describe('get orders by customer only if customer hasn\'t digit and more than 5 
     const orderMock = [{}];
 
     const orderRepositoryMock = {
-      getOrdersByCustomer: () => orderMock,
+      getAllOrdersByCustomer: () => orderMock,
     } as unknown as OrderRepositoryInterface;
 
     const getOrderService = new GetAllOrdersByCustomerService(orderRepositoryMock);
@@ -32,7 +32,7 @@ describe('get orders by customer only if customer hasn\'t digit and more than 5 
     const orderMock = [{}];
 
     const orderRepositoryMock = {
-      getOrdersByCustomer: () => orderMock,
+      getAllOrdersByCustomer: () => orderMock,
     } as unknown as OrderRepositoryInterface;
 
     const getOrderService = new GetAllOrdersByCustomerService(orderRepositoryMock);
