@@ -3,19 +3,18 @@ import Order from '@src/modules/order/domain/model/entity/order.entity';
 import { Exception } from '@src/modules/shared/domain/service/util/exception/exceptions.service';
 import { ExceptionTypeEnum } from '@src/modules/shared/domain/const/exception-type.enum';
 
-export class SetOrderStatusPaidService {
+export class SetOrderStatusCancelService {
   constructor(
     private readonly orderRepository: OrderRepositoryInterface,
   ) { }
 
   async setOrderStatusToCancelled(id: string): Promise<Order> {
-    const order = await this.orderRepository.findOrderById(id);
+    const order = await this.orderRepository.findOrderById(id) as Order;
 
     if (!order) {
       throw new Exception(ExceptionTypeEnum.NotFound, `Order with id ${id} not found`);
     }
     order.setCancelled();
-
     return await this.saveOrder(order);
   }
 

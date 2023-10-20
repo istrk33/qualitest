@@ -9,7 +9,7 @@ export class SetOrderStatusPaidService {
   ) { }
 
   async setOrderStatusToPaid(id: string): Promise<Order> {
-    const order = await this.orderRepository.findOrderById(id);
+    const order = await this.orderRepository.findOrderById(id) as Order;
 
     if (!order) {
       throw new Exception(ExceptionTypeEnum.NotFound, `Order with id ${id} not found`);

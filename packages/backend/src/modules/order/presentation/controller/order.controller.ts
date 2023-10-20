@@ -1,58 +1,78 @@
 // import { Controller } from '@nestjs/common';
 import { Body, Controller, Delete, Get, Inject, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
-import Order from '../../domain/model/entity/order.entity';
+import OrderOrm from '../../infrastructure/db/entity/order.orm-entity';
 import { GetAllOrdersService } from '../../domain/service/use-case/get-all-orders.service';
-import { GetOrdersBeforeDateService } from '../../domain/service/use-case/get-all-order-before-date.service';
+import { GetAllOrdersBeforeDateService } from '../../domain/service/use-case/get-all-orders-before-date.service';
 import { OrderPresenter } from '@src/modules/order/presentation/presenter/order.presenter';
-import { GetOrdersAfterDateService } from '../../domain/service/use-case/get-all-order-after-date.service';
-import { GetOrdersByCustomerService } from '../../domain/service/use-case/get-order-by-customer.service';
+import { GetAllOrdersAfterDateService } from '../../domain/service/use-case/get-all-orders-after-date.service';
+import { GetAllOrdersByCustomerService } from '../../domain/service/use-case/get-all-orders-by-customer.service';
+import { SetOrderStatusCancelService } from '../../domain/service/use-case/cancel-order.service';
+import { SetOrderStatusPaidService } from '../../domain/service/use-case/set-order-status-paid.service';
+import { DeleteOrderService } from '../../domain/service/use-case/delete-order.service';
+import { CreateOrderDto } from '../../domain/model/dto/create-order.dto';
+import { CreateOrderService } from '../../domain/service/use-case/create-order.service';
 
-const MIN_CHAR_LENGTH = 5;
+
 @Controller('/orders')
 export default class OrderController {
 
   constructor(
     private readonly getAllOrdersService: GetAllOrdersService,
-    private readonly getOrdersBeforeDateService: GetOrdersBeforeDateService,
-    private readonly getOrdersAfterDateService: GetOrdersAfterDateService,
-    private readonly getOrdersByCustomerService: GetOrdersByCustomerService,
-    // private readonly searchMentoringSlotsService: SearchMentoringSlotsService,
-    // private readonly deleteMentoringSlotService: DeleteMentoringSlotService,
-    // private readonly getMentoringSlotBySlugService: GetMentoringSlotBySlugService,
-    // private readonly updateMentoringSlotService: UpdateMentoringSlotService,
-    // private readonly cancelMentoringSlotService: CancelMentoringSlotService,
-    // private readonly confirmMentoringSlotService: ConfirmMentoringSlotService,
-    // private readonly delayMentoringSlotService: DelayMentoringSlotService,
-    // private readonly downgradeMentoringSlotService: DowngradeMentoringSlotService,
-    // private readonly getMentoringSlotsByMissedService: GetMentoringSlotsByMissedService,
+    private readonly getOrdersBeforeDateService: GetAllOrdersBeforeDateService,
+    private readonly getOrdersAfterDateService: GetAllOrdersAfterDateService,
+    private readonly getOrdersByCustomerService: GetAllOrdersByCustomerService,
+    private readonly setOrderStatusToPaidService: SetOrderStatusPaidService,
+    private readonly setOrderStatusToCancelService: SetOrderStatusCancelService,
+    private readonly deleteOrderService: DeleteOrderService,
+    private readonly createOrderService: CreateOrderService,
   ) { }
 
   @Get('/get-all-orders')
-  async getAllOrders(): Promise<Order[]> {
+  async getAllOrders(): Promise<OrderOrm[]> {
     return await this.getAllOrdersService.getAllOrders();
   }
 
   @Get('/get-all-orders-before-date/:date')
-  async getOrdersBeforeDate(@Param('date') date: string): Promise<Order[]> {
-    return await this.getOrdersBeforeDateService.getOrdersBeforeDate(new Date(date));
+  async getAllOrdersBeforeDate(@Param('date') date: string): Promise<OrderOrm[]> {
+    return await this.getOrdersBeforeDateService.getAllOrdersBeforeDate(new Date(date));
   }
 
   @Get('/get-all-orders-after-date/:date')
-  async getOrdersAfterDate(@Param('date') date: string): Promise<Order[]> {
-    return await this.getOrdersAfterDateService.getOrdersAfterDate(new Date(date));
+  async getAllOrdersAfterDate(@Param('date') date: string): Promise<OrderOrm[]> {
+    return await this.getOrdersAfterDateService.getAllOrdersAfterDate(new Date(date));
   }
 
   @Get('/get-all-orders-by-customer/:customer')
-  async getOrdersByCustomer(@Param('customer') customer: string): Promise<Order[]> {
-    // if customer contains digit and length<5
-    if (customer.length < MIN_CHAR_LENGTH || /\d/.test(customer)) {
-      if (customer.length < MIN_CHAR_LENGTH) {
-        throw new Error('Error on username length, it must be 5 char minimum !');
-      } else {
-        throw new Error('Error on username composition, it can\'t have digit !');
-      }
+  async getAllOrdersByCustomer(@Param('customer') customer: string): Promise<OrderOrm[]> {
+    return await this.getOrdersByCustomerService.getAllOrdersByCustomer(customer);
+  }
 
-    }
-    return await this.getOrdersByCustomerService.getOrdersByCustomer(customer);
+  @Patch('/:id/pay-order')
+  async setOrderStatusToPaidById(@Param('id') id: string): Promise<OrderPresenter> {
+    const order = await this.setOrderStatusToPaidService.setOrderStatusToPaid(id);
+    return new OrderPresenter(order);
+  }
+
+  @Patch('/:id/cancel-order')
+  async setOrderStatusToCancelById(@Param('id') id: string): Promise<OrderPresenter> {
+    const order = await this.setOrderStatusToCancelService.setOrderStatusToCancelled(id);
+    return new OrderPresenter(order);
+  }
+
+  @Patch('/:id/delete-order')
+  async deleteOrderById(@Param('id') id: string): Promise<OrderPresenter> {
+    const order = await this.setOrderStatusToCancelService.setOrderStatusToCancelled(id);
+    return new OrderPresenter(order);
+  }
+
+  @Delete('/:id')
+  async deleteOrder(@Param('id') id: string): Promise<void> {
+    return await this.deleteOrderService.deleteOrder(id);
+  }
+
+  @Post()
+  async createOrder(@Body() createOrderDto: CreateOrderDto): Promise<OrderPresenter> {
+    const mentoringSlot = await this.createOrderService.createOrder(createOrderDto);
+    return new OrderPresenter(mentoringSlot);
   }
 }
